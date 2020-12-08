@@ -5,7 +5,9 @@
 package it.unipd.tos.business;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import it.unipd.tos.model.MenuItem;
 import it.unipd.tos.model.User;
@@ -14,7 +16,9 @@ import it.unipd.tos.business.exception.TakeAwayBillException;
 
 
 public class TakeAwayManager implements TakeAwayBill {
-
+    
+    List<User> underageCustomers = new ArrayList<User>();
+    boolean randomBoolean = false;
 
     public double getOrderPrice(List<MenuItem> itemsOrdered, 
             User user, int time) 
@@ -67,6 +71,23 @@ public class TakeAwayManager implements TakeAwayBill {
         // commissione di 0,50 €
         if (total < 10) {
             total += 0.50;
+        }
+        
+        // Regalare massimo 10 gelati gratis (uno per ogni utente) 
+        // a minorenni tra le 18 e le 19
+        if (time > 64800 && time < 68400 && user.getAge() < 18 &&
+                !underageCustomers.contains(user) &&
+                underageCustomers.size() < 10) {
+
+            Random rand = new Random();
+            randomBoolean = rand.nextBoolean();
+            int randomInt = rand.nextInt(itemsOrdered.size());
+
+            if (randomBoolean == true) {
+                underageCustomers.add(user);
+                double discount = itemsOrdered.get(randomInt).getPrice();
+                total -= discount;
+            }
         }
         
         return total;

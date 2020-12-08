@@ -136,5 +136,109 @@ public class TakeAwayTest {
         totalPrice = manager.getOrderPrice(bill, user, 0);
         assertEquals(7.3, totalPrice, 0);
     }
+    
+    // Regalare massimo 10 gelati gratis (uno per ogni utente) a minorenni tra
+    // le 18 e le 19
+    
+    // tutte le condizioni verificate
+    @Test
+    public void freeGelatiAllConditionsVerifiedTest() throws TakeAwayBillException {
+        int time = 64850;
+
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "freeBevanda", 11.00));
+        User user1 = new User(1,"a", "b", LocalDate.of(2005, 1, 1));
+
+        boolean getTrue = false;
+        boolean getFalse = false;
+        double priceTrue = 0.0;
+        double priceFalse = 0.0;
+
+        while (getTrue == false || getFalse == false) {
+            double price = manager.getOrderPrice(bill, user1, time);
+
+            if (manager.randomBoolean == true) {
+                getTrue = true;
+                priceTrue = price;
+                manager.underageCustomers.remove(user1);
+            } else {
+                getFalse = true;
+                priceFalse = price;
+            }
+        }
+        assertEquals(priceTrue, 0, 0);
+        assertEquals(priceFalse, 11, 0);
+
+    }
+    
+    // non sono ancora le 18
+    @Test
+    public void freeGelatiTimeIsLessTest() throws TakeAwayBillException {
+        int time = 60000;
+
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "freeBevanda", 11.00));
+        User user1 = new User(1,"a", "b", LocalDate.of(2005, 1, 1));
+        double price = manager.getOrderPrice(bill, user1, time);
+        assertEquals(price, 11, 0);
+    }
+    
+    // sono già passate le 19
+    @Test
+    public void freeGelatiTimeIsMoreTest() throws TakeAwayBillException {
+        int time = 70000;
+
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "freeBevanda", 11.00));
+        User user1 = new User(1,"a", "b", LocalDate.of(2005, 1, 1));
+        double price = manager.getOrderPrice(bill, user1, time);
+        assertEquals(price, 11, 0);
+    }
+    
+    // il cliente non è minorenne
+    @Test
+    public void freeGelatiUserIsNotUnderageTest() throws TakeAwayBillException {
+        int time = 64850;
+
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "freeBevanda", 11.00));
+        User user1 = new User(1,"a", "b", LocalDate.of(1990, 1, 1));
+        double price = manager.getOrderPrice(bill, user1, time);
+        assertEquals(price, 11, 0);
+    }
+    
+    // il cliente ha già avuto il suo alimento gratis
+    @Test
+    public void freeGelatiUserAlreadyGotDiscountTest() throws TakeAwayBillException {
+        int time = 64850;
+
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "freeBevanda", 11.00));
+        User user1 = new User(1,"a", "b", LocalDate.of(2005, 1, 1));
+        manager.underageCustomers.add(user1);
+        double price = manager.getOrderPrice(bill, user1, time);
+        assertEquals(price, 11, 0);
+    }
+    
+    // sono già stati dati 10 alimenti gratis
+    @Test
+    public void freeGelatiAlreadyGiven10AwayTest() throws TakeAwayBillException {
+        int time = 64850;
+
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "freeBevanda", 11.00));
+        User user1 = new User(1,"a", "b", LocalDate.of(2005, 1, 1));
+        manager.underageCustomers.add(user1);
+        manager.underageCustomers.add(user1);
+        manager.underageCustomers.add(user1);
+        manager.underageCustomers.add(user1);
+        manager.underageCustomers.add(user1);
+        manager.underageCustomers.add(user1);
+        manager.underageCustomers.add(user1);
+        manager.underageCustomers.add(user1);
+        manager.underageCustomers.add(user1);
+        manager.underageCustomers.add(user1);
+
+        User user2 = new User(2,"c", "d", LocalDate.of(2004, 1, 1));
+
+        double price = manager.getOrderPrice(bill, user2, time);
+
+        assertEquals(price, 11, 0);
+    }
+    
 
 }
