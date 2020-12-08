@@ -2,4 +2,5 @@ target/*
 bin/*
 .settings/*
 .project
+.classpath
 /target/
