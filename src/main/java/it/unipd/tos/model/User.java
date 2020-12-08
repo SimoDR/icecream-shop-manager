@@ -8,14 +8,20 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class User {
+    private int id;
     private String name;
     private String surname;
     private LocalDate birthday;
 
-    public User(String name, String surname, LocalDate birthday) {
+    public User(int id, String name, String surname, LocalDate birthday) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.birthday = birthday;
+    }
+    
+    public int getId() {
+        return id;
     }
 
     public String getName() {

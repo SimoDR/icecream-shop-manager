@@ -17,7 +17,12 @@ public class UserTest {
 
     @Before
     public void setup() {
-        user = new User("Pippo", "Pluto", LocalDate.of(1999, 1, 24));
+        user = new User(43,"Pippo", "Pluto", LocalDate.of(1999, 1, 24));
+    }
+    
+    @Test
+    public void getIdTest() {
+        assertEquals(43, user.getId());
     }
 
     @Test
@@ -38,7 +43,7 @@ public class UserTest {
 
     @Test
     public void nullBirthDateTest() {
-        User userTest = new User("Pippo", "Pluto", null);
+        User userTest = new User(43,"Pippo", "Pluto", null);
         assertEquals(0, userTest.getAge());
     }
 

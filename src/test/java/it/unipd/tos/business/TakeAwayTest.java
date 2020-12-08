@@ -29,7 +29,7 @@ public class TakeAwayTest {
         manager = new TakeAwayManager();
         totalPrice = 0.0;
         bill = new ArrayList<MenuItem>();
-        user = new User("Pippo", "Pluto", LocalDate.of(1999, 1, 24));
+        user = new User(43,"Pippo", "Pluto", LocalDate.of(1999, 1, 24));
     }
 
     @Test(expected = TakeAwayBillException.class)
