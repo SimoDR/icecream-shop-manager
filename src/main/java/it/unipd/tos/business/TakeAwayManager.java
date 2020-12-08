@@ -63,6 +63,12 @@ public class TakeAwayManager implements TakeAwayBill {
             throw new TakeAwayBillException("Can't order more than 30 items");
         }
         
+        // Se l’importo totale è inferiore a 10 € viene aggiunta una
+        // commissione di 0,50 €
+        if (total < 10) {
+            total += 0.50;
+        }
+        
         return total;
 
     }

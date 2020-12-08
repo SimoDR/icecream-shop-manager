@@ -123,5 +123,18 @@ public class TakeAwayTest {
 
         totalPrice = manager.getOrderPrice(bill, user, 0);
     }
+    
+    // Se l’importo totale è inferiore a 10 € viene aggiunta una
+    // commissione di 0,50 €
+    @Test
+    public void lessThen10EurosShouldGet50centsFeeTest() 
+            throws TakeAwayBillException {
+
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "simpleGelato", 1.30));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        totalPrice = manager.getOrderPrice(bill, user, 0);
+        assertEquals(7.3, totalPrice, 0);
+    }
 
 }
