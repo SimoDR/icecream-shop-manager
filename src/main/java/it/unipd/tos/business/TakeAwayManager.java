@@ -58,6 +58,11 @@ public class TakeAwayManager implements TakeAwayBill {
             total -= 0.1 * total;
         }
         
+        // Non è possibile avere un’ordinazione con più di 30 elementi
+        if (itemsOrdered.size() > 30) {
+            throw new TakeAwayBillException("Can't order more than 30 items");
+        }
+        
         return total;
 
     }

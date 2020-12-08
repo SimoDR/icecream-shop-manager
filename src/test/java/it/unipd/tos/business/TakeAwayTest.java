@@ -84,5 +84,44 @@ public class TakeAwayTest {
         totalPrice = manager.getOrderPrice(bill, user, 0);
         assertEquals(54, totalPrice, 0);
     }
+    
+    // Non è possibile avere un’ordinazione con più di 30 elementi
+    @Test(expected = TakeAwayBillException.class)
+    public void moreThan30ItemsShouldThrowExceptionTest() throws TakeAwayBillException {
+
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "simpleGelato", 1.30));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "simpleGelato", 1.30));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "simpleGelato", 1.30));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "simpleGelato", 1.30));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "simpleGelato", 1.30));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "simpleGelato", 1.30));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+        bill.add(new MenuItem(MenuItem.itemType.Budino, "simpleBudino", 2.50));
+        bill.add(new MenuItem(MenuItem.itemType.Bevanda, "simpleBevanda", 3.00));
+
+        totalPrice = manager.getOrderPrice(bill, user, 0);
+    }
 
 }
