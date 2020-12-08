@@ -29,7 +29,7 @@ public class TakeAwayManager implements TakeAwayBill {
         }
 
         double total = 0.0;
-
+        double totalGelatiBudini = 0.0;
         int numGelati = 0;
         double minPriceGelato = Double.MAX_VALUE;
 
@@ -37,17 +37,25 @@ public class TakeAwayManager implements TakeAwayBill {
             total += i.getPrice();
             if (i.getItemType() == MenuItem.itemType.Gelato) {
                 numGelati++;
-
+                totalGelatiBudini += i.getPrice();
                 if (i.getPrice() < minPriceGelato) {
                     minPriceGelato = i.getPrice();
                 }
             }
-
+            if (i.getItemType() == MenuItem.itemType.Budino) {
+                totalGelatiBudini += i.getPrice();
+            }
         }
 
         // se presi più di 5 gelati sconto sul gelato meno costoso
         if (numGelati > 5) {
             total -= 0.5 * minPriceGelato;
+        }
+
+        // Se l’importo totale delle ordinazioni (Gelati e Budini)
+        // supera i 50 euro viene fatto il 10% disconto
+        if (totalGelatiBudini > 50) {
+            total -= 0.1 * total;
         }
         
         return total;

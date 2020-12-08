@@ -70,5 +70,19 @@ public class TakeAwayTest {
         totalPrice = manager.getOrderPrice(bill, user, 0);
         assertEquals(13.25, totalPrice, 0);
     }
+    
+    // Se l’importo totale delle ordinazioni (Gelati e Budini)
+    // supera i 50 euro viene fatto il 10% disconto
+    @Test
+    public void gelatiAndBudiniMoreThan50EurosShouldGet10PercentDiscountTest()
+            throws TakeAwayBillException {
+
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "Gelato1", 10.0));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "Gelato2", 20.0));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "Budino1", 30.0));
+
+        totalPrice = manager.getOrderPrice(bill, user, 0);
+        assertEquals(54, totalPrice, 0);
+    }
 
 }
