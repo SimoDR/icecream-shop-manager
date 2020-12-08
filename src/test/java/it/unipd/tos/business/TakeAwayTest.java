@@ -55,5 +55,20 @@ public class TakeAwayTest {
         totalPrice = manager.getOrderPrice(bill, user, 0);
         assertEquals(13.8, totalPrice, 0);
     }
+    
+    // se presi più di 5 gelati sconto sul gelato meno costoso
+    @Test
+    public void moreThan5GelatiShouldGetDiscountOfHalfOfTheCheaperTest() 
+            throws TakeAwayBillException  {
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "Gelato1", 1.30));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "Gelato2", 1.50));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "Gelato3", 1.80));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "Gelato4", 0.70));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "Gelato5", 1.30));
+        bill.add(new MenuItem(MenuItem.itemType.Gelato, "Gelato6", 7.00));
+
+        totalPrice = manager.getOrderPrice(bill, user, 0);
+        assertEquals(13.25, totalPrice, 0);
+    }
 
 }

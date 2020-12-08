@@ -30,9 +30,24 @@ public class TakeAwayManager implements TakeAwayBill {
 
         double total = 0.0;
 
+        int numGelati = 0;
+        double minPriceGelato = Double.MAX_VALUE;
 
         for (MenuItem i : itemsOrdered) {
             total += i.getPrice();
+            if (i.getItemType() == MenuItem.itemType.Gelato) {
+                numGelati++;
+
+                if (i.getPrice() < minPriceGelato) {
+                    minPriceGelato = i.getPrice();
+                }
+            }
+
+        }
+
+        // se presi più di 5 gelati sconto sul gelato meno costoso
+        if (numGelati > 5) {
+            total -= 0.5 * minPriceGelato;
         }
         
         return total;
